@@ -42,14 +42,10 @@ async function main(): Promise<void> {
 
     info(`owner: ${owner}, repo: ${repo}`);
 
-    const name = core.getInput('release_name')
-    const release = core.getInput('release')
-    const release_title = core.getInput('release_title');
-    const releaseNotesPrefix = core.getInput('release-notes-prefix')
-    const releaseNotesSuffix = core.getInput('release-notes-suffix')
-    const releaseNote = core.getInput('release_note');
+    const payload = github.context.payload;
+    const context = github.context;
 
-    info(`name: ${name}, release: ${release}, release_title: ${release_title}, releaseNotesPrefix: ${releaseNotesPrefix}, releaseNotesSuffix: ${releaseNotesSuffix}, releaseNote: ${releaseNote}`);
+    info(`payload: ${JSON.stringify(payload)}, context: ${JSON.stringify(context)}`);
 
     // const { ref_type: refType, ref: version } = github.context.payload;
     // info(`ref_type: ${refType}, ref: ${version}`);

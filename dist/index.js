@@ -36078,13 +36078,9 @@ function main() {
             const { owner, repo } = github.context.repo;
             const { info, error } = core;
             info(`owner: ${owner}, repo: ${repo}`);
-            const name = core.getInput('release_name');
-            const release = core.getInput('release');
-            const release_title = core.getInput('release_title');
-            const releaseNotesPrefix = core.getInput('release-notes-prefix');
-            const releaseNotesSuffix = core.getInput('release-notes-suffix');
-            const releaseNote = core.getInput('release_note');
-            info(`name: ${name}, release: ${release}, release_title: ${release_title}, releaseNotesPrefix: ${releaseNotesPrefix}, releaseNotesSuffix: ${releaseNotesSuffix}, releaseNote: ${releaseNote}`);
+            const payload = github.context.payload;
+            const context = github.context;
+            info(`payload: ${JSON.stringify(payload)}, context: ${JSON.stringify(context)}`);
             // const { ref_type: refType, ref: version } = github.context.payload;
             // info(`ref_type: ${refType}, ref: ${version}`);
             // if (refType !== trigger) {
