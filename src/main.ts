@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { Octokit } from '@octokit/rest';
 import axios from 'axios';
 
 import { replaceMsg } from './util';
@@ -33,6 +32,7 @@ async function main(): Promise<void> {
       let log = '';
       let msgTitle = core.getInput('msg-title');
       const msgFooter = core.getInput('msg-footer');
+      const msgPoster = core.getInput('msg-poster');
 
       const replaceMsg4Me = (msg: string) => {
         return replaceMsg(msg, version, owner, repo);
@@ -42,6 +42,10 @@ async function main(): Promise<void> {
         msgTitle = replaceMsg4Me(msgTitle);
       } else {
         msgTitle = `# ${version} 发布日志`;
+      }
+
+      if (msgPoster) {
+        log = `![](${msgPoster})\n\n${log}`;
       }
 
       if (msgFooter) {
@@ -63,7 +67,7 @@ async function main(): Promise<void> {
                 msgtype: 'markdown',
                 markdown: {
                   title: `${version} 发布日志`,
-                  text: `${releaseBody} \n\n ${log}`,
+                  text: `${msgTitle} \n\n ${releaseBody} \n\n ${log}`,
                 },
               },
             );
