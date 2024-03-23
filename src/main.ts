@@ -1,26 +1,27 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { Octokit } from '@octokit/rest';
-import { dealStringToArr } from 'actions-util';
 import axios from 'axios';
 
-import { execOutput, filterChangelogs, getChangelog, replaceMsg } from './util';
+import { replaceMsg } from './util';
 
 // **********************************************************
 async function main(): Promise<void> {
   try {
     // **********************************************************
-    const token = core.getInput('token');
-    const octokit = new Octokit({ auth: `token ${token}` });
 
     const dingdingToken = core.getInput('dingding-token');
 
     const { owner, repo } = github.context.repo;
-    const { info, error } = core;
+    const { info } = core;
 
     info(`owner: ${owner}, repo: ${repo}`);
 
-    const { name: releaseName, body: releaseBody, tag_name: version } = github.context.payload;
+    const {
+      name: releaseName,
+      body: releaseBody,
+      tag_name: version,
+    } = github.context.payload.release;
 
     info(`
       releaseName: ${JSON.stringify(releaseName)}, 
